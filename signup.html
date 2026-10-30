@@ -1,3 +1,33 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Create account | Designer Tracker</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"><style>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create account | Designer Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
 .auth-page{min-height:100vh;display:grid;grid-template-columns:1.05fr .95fr;background:#fff}.auth-art{background:#25243d;color:white;padding:55px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}.auth-art:before{content:"";position:absolute;border:1px solid #ffffff18;border-radius:50%;width:500px;height:500px;right:-170px;top:15%;box-shadow:0 0 0 55px #ffffff08,0 0 0 110px #ffffff06}.auth-brand{display:flex;align-items:center;gap:10px;font:800 20px Manrope;z-index:1}.auth-brand span{background:#7065ef;padding:9px;border-radius:10px}.auth-copy{max-width:480px;z-index:1}.auth-copy .eyebrow{color:#b4b0ff}.auth-copy h1{font:800 clamp(32px,4vw,54px)/1.12 Manrope;letter-spacing:-2px;margin:0 0 18px}.auth-copy p{color:#c2c1d0;line-height:1.8}.auth-foot{font-size:10px;color:#a4a3b8}.auth-main{display:grid;place-items:center;padding:35px}.auth-form-wrap{width:min(390px,100%)}.auth-form-wrap h2{font:800 27px Manrope;margin:0 0 8px}.auth-form-wrap>p{color:#999bab;font-size:12px;margin:0 0 24px}.auth-form{display:grid;gap:13px}.auth-form label{display:grid;gap:7px;font-size:11px;font-weight:700;color:#55576c}.auth-form input{height:42px;border:1px solid #e9e9f0;border-radius:9px;padding:0 13px;outline:0}.auth-form .primary-button{height:44px;margin-top:5px}.auth-switch{text-align:center;color:#999bab;font-size:11px;margin-top:18px}.auth-switch a{color:#6257e8;font-weight:700}.auth-error{color:#c9515e;font-size:10px}@media(max-width:760px){.auth-page{grid-template-columns:1fr}.auth-art{display:none}.auth-main{min-height:100vh}}
-</style></head><body><div class="auth-page"><aside class="auth-art"><a class="auth-brand" href="login.html"><span><i data-lucide="layers"></i></span>studio<span style="background:none;padding:0;color:#c8c6d9">track</span></a><div class="auth-copy"><div class="eyebrow">MAKE SPACE FOR GOOD IDEAS</div><h1>Bring your design team into focus.</h1><p>Set up your workspace and keep requests, people and conversations connected.</p></div><div class="auth-foot">© 2026 Studio Track</div></aside><main class="auth-main"><div class="auth-form-wrap"><div class="eyebrow">GET STARTED</div><h2>Create your account</h2><p>Start your Designer Tracker workspace.</p><form class="auth-form" id="signupForm"><label>Full name<input id="name" required placeholder="Your name"></label><label>Work email<input id="email" type="email" required placeholder="you@company.com"></label><label>Job role<input id="role" placeholder="e.g. Product Designer"></label><label>Password<input id="password" type="password" minlength="6" required placeholder="At least 6 characters"></label><div class="auth-error" id="error"></div><button class="primary-button" type="submit">Create account <i data-lucide="arrow-right"></i></button></form><div class="auth-switch">Already have an account? <a href="login.html">Sign in</a></div></div></main></div><script src="https://unpkg.com/lucide@latest"></script><script>lucide.createIcons();document.getElementById('signupForm').addEventListener('submit',e=>{e.preventDefault();const user={name:document.getElementById('name').value.trim(),email:document.getElementById('email').value.trim(),role:document.getElementById('role').value.trim()||'Product Designer',team:'Product Design',phone:'',photo:''};localStorage.setItem('dt_user',JSON.stringify(user));localStorage.setItem('dt_session',JSON.stringify({email:user.email,at:Date.now()}));location.href='index.html'});</script></body></html>
+</style>
+  </head>
+  <body>
+    <div class="auth-page">
+      <aside class="auth-art"><a class="auth-brand" href="login.html"><span><i data-lucide="layers"></i></span>studio<span style="background:none;padding:0;color:#c8c6d9">track</span></a><div class="auth-copy"><div class="eyebrow">MAKE SPACE FOR GOOD IDEAS</div><h1>Bring your design team into focus.</h1>
+        <p>Set up your workspace and keep requests, people and conversations connected.</p></div>
+        <div class="auth-foot">© 2026 Studio Track</div></aside><main class="auth-main"><div class="auth-form-wrap">
+          <div class="eyebrow">GET STARTED</div>
+          <h2>Create your account</h2>
+          <p>Start your Designer Tracker workspace.</p>
+          <form class="auth-form" id="signupForm"><label>Full name<input id="name" required placeholder="Your name"></label>
+            <label>Work email<input id="email" type="email" required placeholder="you@company.com"></label>
+            <label>Job role<input id="role" placeholder="e.g. Product Designer"></label>
+            <label>Password<input id="password" type="password" minlength="6" required placeholder="At least 6 characters"></label>
+            <div class="auth-error" id="error"></div>
+            <button class="primary-button" type="submit">Create account <i data-lucide="arrow-right"></i></button></form>
+          <div class="auth-switch">Already have an account? <a href="login.html">Sign in</a></div></div></main></div>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>lucide.createIcons();document.getElementById('signupForm').addEventListener('submit',e=>{e.preventDefault();const user={name:document.getElementById('name').value.trim(),email:document.getElementById('email').value.trim(),role:document.getElementById('role').value.trim()||'Product Designer',team:'Product Design',phone:'',photo:''};localStorage.setItem('dt_user',JSON.stringify(user));localStorage.setItem('dt_session',JSON.stringify({email:user.email,at:Date.now()}));location.href='index.html'});
+      </script>
+  </body>
+</html>
