@@ -309,25 +309,36 @@
   <div class="drawer-footer" id="detailFooter"></div>
 </aside>
 
-<!-- CHAT PANEL -->
+<!-- CHAT PANEL  -->
 <section class="chat-window" id="chatWindow" aria-label="Designer chat" aria-hidden="true">
-  <div class="chat-header">
-    <div class="chat-person">
-      <img id="chatAvatar" src="https://i.pravatar.cc/100?img=47" alt="">
-      <div><strong id="chatName">Designer</strong><small>Designer messages</small></div>
+  <aside class="wa-list">
+    <div class="wa-list-header"><strong>Chats</strong></div>
+    <div class="wa-search">
+      <input id="chatSearch" type="search" placeholder="Search or start new chat" aria-label="Search chats" autocomplete="off">
     </div>
-    <button class="close-button" id="closeChat" aria-label="Close chat">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 6 12 12M18 6 6 18"/></svg>
-    </button>
+    <div class="wa-chats" id="chatList"></div>
+  </aside>
+
+  <div class="wa-convo">
+    <div class="chat-header">
+      <div class="chat-person">
+        <button class="wa-back" id="chatBack" type="button" aria-label="Back to chats">‹</button>
+        <img id="chatAvatar" src="https://i.pravatar.cc/100?img=47" alt="">
+        <div><strong id="chatName">Designer</strong><small id="chatStatus">online</small></div>
+      </div>
+      <button class="close-button" id="closeChat" aria-label="Close chat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="chat-context" id="chatContext">Direct message</div>
+    <div class="chat-messages" id="chatMessages" aria-live="polite"></div>
+    <form class="chat-form" id="chatForm">
+      <input id="chatInput" placeholder="Type a message" autocomplete="off" aria-label="Message">
+      <button type="submit" aria-label="Send message">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+      </button>
+    </form>
   </div>
-  <div class="chat-context" id="chatContext">Direct message</div>
-  <div class="chat-messages" id="chatMessages" aria-live="polite"></div>
-  <form class="chat-form" id="chatForm">
-    <input id="chatInput" placeholder="Type a message..." autocomplete="off" aria-label="Message">
-    <button type="submit" aria-label="Send message">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-    </button>
-  </form>
 </section>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
