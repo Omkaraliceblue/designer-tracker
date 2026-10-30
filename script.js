@@ -421,60 +421,91 @@ function cancelTask(taskId) {
   showToast("Task canceled.");
 }
 
+/* =========================================================
+   CHAT (WhatsApp-style)
+========================================================= */
+
+// Left chat list, with search
+function renderChatList() {
+  const query = $("#chatSearch").value.trim().toLowerCase();
+  const items = designers.filter(d => d.name.toLowerCase().includes(query));
+  $("#chatList").innerHTML = items.map(d => {
+    const last = chatMessages[d.id].at(-1);
+    return `
+      <button class="wa-chat ${d.id === activeChatDesignerId ? "active" : ""}" data-chat="${d.id}">
+        <img src="${escapeHTML(d.avatar)}" alt="">
+        <div class="wa-chat-info">
+          <div class="wa-chat-top"><strong>${escapeHTML(d.name)}</strong><small>${escapeHTML(last.time || "")}</small></div>
+          <div class="wa-chat-preview">${escapeHTML(last.text)}</div>
+        </div>
+      </button>`;
+  }).join("") || `<div class="empty-state">No chats found</div>`;
+}
+
+// Open a conversation (from the list, a task row or the Messages menu)
 function openChat(designerId, taskId = null) {
   const designer = getDesigner(designerId);
+  const task = tasks.find(t => t.id === taskId);
   activeChatDesignerId = designer.id;
   activeChatTaskId = taskId;
+
+  closeDrawer("#detailDrawer");
   $("#chatAvatar").src = designer.avatar;
   $("#chatName").textContent = designer.name;
-  const task = tasks.find(t => t.id === taskId);
   $("#chatContext").textContent = task ? `${task.id} · ${task.name}` : "Direct message";
-  $("#chatWindow").classList.add("open");
-  $("#chatWindow").setAttribute("aria-hidden", "false");
   if (task) task.messages = 0;
+
+  $("#chatWindow").classList.add("open", "show-convo");
+  $("#chatWindow").setAttribute("aria-hidden", "false");
   renderTasks();
   renderChatMessages();
   setTimeout(() => $("#chatInput").focus(), 100);
 }
 
 function closeChat() {
-  $("#chatWindow").classList.remove("open");
+  $("#chatWindow").classList.remove("open", "show-convo");
   $("#chatWindow").setAttribute("aria-hidden", "true");
 }
 
+// Message bubbles (time inside the bubble)
 function renderChatMessages() {
   const messages = chatMessages[activeChatDesignerId] || [];
-  $("#chatMessages").innerHTML = messages.map(message => `
-    <div class="message ${message.direction}">
-      <p>${escapeHTML(message.text)}</p>
-      <small>${escapeHTML(message.time || "")}</small>
+  $("#chatMessages").innerHTML = messages.map(m => `
+    <div class="message ${m.direction}">
+      <p>${escapeHTML(m.text)}<small>${escapeHTML(m.time || "")}</small></p>
     </div>`).join("");
   $("#chatMessages").scrollTop = $("#chatMessages").scrollHeight;
+  renderChatList();
 }
 
+// Send message + demo auto-reply
 function sendChatMessage(text) {
   if (!text.trim() || !activeChatDesignerId) return;
   const designerId = activeChatDesignerId;
-  const now = new Date().toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" });
-  chatMessages[designerId].push({ direction:"outgoing", text:text.trim(), time:now });
+  const clock = () => new Date().toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" });
+
+  chatMessages[designerId].push({ direction:"outgoing", text:text.trim(), time:clock() });
   renderChatMessages();
   $("#chatInput").value = "";
 
   setTimeout(() => {
-    if (!chatMessages[designerId]) return;
     const replies = [
       "Thanks for sharing! I'll take a look and get back to you.",
       "Got it. I'll review this and keep you updated.",
       "Thanks for the details. I'll work on this and share an update soon."
     ];
-    chatMessages[designerId].push({
-      direction:"incoming",
-      text:replies[Math.floor(Math.random() * replies.length)],
-      time:new Date().toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" })
-    });
-    if (activeChatDesignerId === designerId && $("#chatWindow").classList.contains("open")) renderChatMessages();
+    chatMessages[designerId].push({ direction:"incoming", text:replies[Math.floor(Math.random() * replies.length)], time:clock() });
+    if (activeChatDesignerId === designerId) renderChatMessages(); else renderChatList();
   }, 1500);
 }
+
+// Chat list events
+$("#chatList").addEventListener("click", event => {
+  const item = event.target.closest("[data-chat]");
+  if (item) openChat(item.dataset.chat);
+});
+$("#chatSearch").addEventListener("input", renderChatList);
+$("#chatBack").addEventListener("click", () => $("#chatWindow").classList.remove("show-convo"));
 
 function populateDesignerOptions() {
   $("#assignDesigner").innerHTML = `<option value="">Select designer</option>` +
